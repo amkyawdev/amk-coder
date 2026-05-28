@@ -7,7 +7,7 @@ export function useChat() {
   const isLoading = ref(false)
   const error = ref(null)
   const thinkingMode = ref(false)
-  const sessionId = ref('default-' + Date.now())
+  const sessionId = ref('default')  // Use consistent session ID
 
   const hasMessages = computed(() => messages.value.length > 0)
 
@@ -47,7 +47,7 @@ export function useChat() {
         body: JSON.stringify({
           message: content,
           thinking_mode: thinkingMode.value,
-          model: options.model || 'deepseek/deepseek-v4-flash',
+          model: options.model || 'inclusionai/ling-2.6-1t:free',
           session_id: sessionId.value
         }),
       })
@@ -61,6 +61,7 @@ export function useChat() {
       messages.value[messages.value.length - 1].content = data.response
 
     } catch (err) {
+      console.error('Chat error:', err)
       error.value = err.message || 'Failed to send message'
       if (messages.value.length > 0 && !messages.value[messages.value.length - 1].content) {
         messages.value.pop()
