@@ -48,16 +48,13 @@
           v-for="item in navItems"
           :key="item.path"
           :to="item.path"
-          :class="[
-            'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200',
-            'hover:bg-white/5',
-            $route.path === item.path
-              ? 'bg-cyber-accent/10 text-cyber-accent border border-cyber-accent/20'
-              : 'text-gray-400 hover:text-white'
-          ]"
+          class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200"
+          :class="route.path === item.path
+            ? 'bg-cyber-accent/10 text-cyber-accent border border-cyber-accent/20'
+            : 'text-gray-400 hover:text-white hover:bg-white/5'"
           @click="closeSidebar"
         >
-          <component :is="item.icon" class="w-5 h-5" />
+          <span v-html="item.icon" class="w-5 h-5 flex-shrink-0" />
           <span class="font-medium">{{ item.label }}</span>
         </RouterLink>
       </nav>
@@ -115,7 +112,7 @@
           </div>
           <span class="font-semibold text-white">AMK AI</span>
         </div>
-        <div class="w-10" /> <!-- Spacer for centering -->
+        <div class="w-10" />
       </header>
 
       <!-- Page Content -->
@@ -137,62 +134,31 @@ const { user, isAuthenticated, logout } = useAuth()
 
 const sidebarOpen = ref(false)
 
-// Navigation items
 const navItems = [
   {
     label: 'Get Started',
     path: '/',
-    icon: {
-      render: () => ({
-        template: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>`
-      })
-    }
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`
   },
   {
     label: 'Chat',
     path: '/chat',
-    icon: {
-      render: () => ({
-        template: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>`
-      })
-    }
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>`
   },
   {
     label: 'API Keys',
     path: '/api-keys',
-    icon: {
-      render: () => ({
-        template: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-        </svg>`
-      })
-    }
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>`
   },
   {
     label: 'Documentation',
     path: '/docs',
-    icon: {
-      render: () => ({
-        template: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>`
-      })
-    }
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`
   },
   {
     label: 'About',
     path: '/about',
-    icon: {
-      render: () => ({
-        template: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>`
-      })
-    }
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
   }
 ]
 
