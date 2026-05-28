@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 
-// Use HuggingFace Space FastAPI backend
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://amkyawdev-amk-coder-backend.hf.space'
+// Use HuggingFace Space FastAPI backend (with /api prefix)
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://amkyawdev-amk-coder-backend.hf.space/api'
 
 export function useChat() {
   const messages = ref([])
@@ -42,7 +42,9 @@ export function useChat() {
     addMessage('assistant', '')
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/chat`, {
+      console.log('Sending to:', API_BASE_URL + '/chat')
+      
+      const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,10 +52,12 @@ export function useChat() {
         body: JSON.stringify({
           message: content,
           thinking_mode: thinkingMode.value,
-          model: options.model || 'inclusionai/ling-2.6-1t:free',
+          model: options.model || 'deepseek/deepseek-v4-flash',
           session_id: sessionId.value
         }),
       })
+
+      console.log('Response status:', response.status)
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}))
@@ -61,10 +65,12 @@ export function useChat() {
       }
 
       const data = await response.json()
+      console.log('Response data:', data)
       // Replace placeholder with actual response
       messages.value[messages.value.length - 1].content = data.response
 
     } catch (err) {
+      console.error('Fetch error:', err)
       error.value = err.message || 'Failed to send message'
       // Remove empty message on error
       if (messages.value.length > 0 && !messages.value[messages.value.length - 1].content) {
@@ -86,7 +92,7 @@ export function useChat() {
     
     // Call backend to clear session
     try {
-      await fetch(`${API_BASE_URL}/api/clear?session_id=${sessionId.value}`, {
+      await fetch(`${API_BASE_URL}/clear?session_id=${sessionId.value}`, {
         method: 'POST'
       })
     } catch (e) {}
