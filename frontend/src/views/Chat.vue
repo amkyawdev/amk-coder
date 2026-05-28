@@ -192,6 +192,8 @@ watch(isLoading, (loading) => {
 const handleSend = async ({ text, files }) => {
   if (!text.trim()) return
 
+  console.log('handleSend called with:', text)  // Debug log
+
   // Include file URLs in message if any
   let fullText = text
   if (files && files.length > 0) {
