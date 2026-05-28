@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-cyber-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-cyber-dark text-white antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-cyber-accent/30 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cyber-dark;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyber-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyber-accent/50;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Base */
+  .glass {
+    @apply bg-glass-bg backdrop-blur-xl border border-glass-border;
+  }
+
+  .glass-hover {
+    @apply transition-all duration-300 hover:bg-glass-bg/90 hover:border-cyber-accent/20;
+  }
+
+  /* Premium Button Styles */
+  .btn-primary {
+    @apply relative overflow-hidden px-6 py-3 rounded-xl font-medium text-white
+           bg-gradient-to-r from-cyber-accent to-cyber-accent-light
+           shadow-glow hover:shadow-glow-lg transition-all duration-300
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply relative overflow-hidden px-6 py-3 rounded-xl font-medium
+           border border-glass-border bg-glass-bg backdrop-blur-md
+           hover:border-cyber-accent/50 hover:bg-cyber-surface transition-all duration-300
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded-lg font-medium text-gray-400
+           hover:text-white hover:bg-white/5 transition-all duration-200;
+  }
+
+  /* Input Styles */
+  .input-cyber {
+    @apply w-full px-4 py-3 rounded-xl bg-cyber-surface border border-cyber-border
+           text-white placeholder-gray-500
+           focus:outline-none focus:border-cyber-accent focus:ring-2 focus:ring-cyber-accent/20
+           transition-all duration-200;
+  }
+
+  .input-glow {
+    @apply relative;
+  }
+
+  .input-glow::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl bg-gradient-to-r from-cyber-accent/20 via-transparent to-cyber-accent/20
+           opacity-0 transition-opacity duration-300 -z-10 blur-xl;
+  }
+
+  .input-glow:focus-within::before {
+    @apply opacity-100;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply glass rounded-2xl p-6 shadow-glass;
+  }
+
+  .card-hover {
+    @apply card glass-hover hover:shadow-glass-hover;
+  }
+
+  /* Bento Grid */
+  .bento-grid {
+    @apply grid gap-4;
+  }
+
+  .bento-item {
+    @apply glass rounded-2xl p-6 transition-all duration-300;
+  }
+
+  /* Premium Typography */
+  .text-gradient {
+    @apply bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-to-r from-cyber-accent via-cyber-accent-light to-cyber-accent bg-clip-text text-transparent;
+  }
+
+  /* Thinking Toggle */
+  .thinking-toggle {
+    @apply relative w-16 h-8 rounded-full bg-cyber-surface border border-cyber-border
+           cursor-pointer transition-all duration-300;
+  }
+
+  .thinking-toggle::before {
+    content: '';
+    @apply absolute top-1 left-1 w-6 h-6 rounded-full bg-gradient-to-br
+           from-cyber-accent to-cyber-accent-light shadow-glow
+           transition-transform duration-300;
+  }
+
+  .thinking-toggle.active {
+    @apply bg-cyber-accent/20 border-cyber-accent;
+  }
+
+  .thinking-toggle.active::before {
+    @apply translate-x-8;
+  }
+
+  /* Chat Bubble */
+  .chat-bubble {
+    @apply max-w-[85%] px-5 py-3 rounded-2xl leading-relaxed;
+  }
+
+  .chat-bubble-user {
+    @apply ml-auto bg-gradient-to-br from-cyber-accent to-cyber-accent-light text-white rounded-br-md;
+  }
+
+  .chat-bubble-assistant {
+    @apply mr-auto bg-cyber-surface border border-glass-border rounded-bl-md;
+  }
+
+  /* Floating Input Container */
+  .floating-input {
+    @apply relative;
+  }
+
+  .floating-input::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl bg-gradient-to-r from-cyber-accent/10 via-transparent to-cyber-accent/10
+           opacity-0 transition-opacity duration-500 -z-10;
+  }
+
+  .floating-input.active::before {
+    @apply opacity-100 animate-pulse-glow;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    @apply h-1 rounded-full bg-cyber-surface overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-gradient-to-r from-cyber-accent to-cyber-accent-light transition-all duration-300;
+  }
+
+  /* Loading Spinner */
+  .spinner {
+    @apply w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin;
+  }
+
+  /* Skeleton Loading */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-cyber-surface via-cyber-border to-cyber-surface
+           bg-[length:200%_100%] rounded;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Glow utilities */
+  .glow-border {
+    @apply relative;
+  }
+
+  .glow-border::after {
+    content: '';
+    @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300
+           bg-cyber-accent/10 blur-md -z-10;
+  }
+
+  .glow-border:hover::after,
+  .glow-border:focus-within::after {
+    @apply opacity-100;
+  }
+
+  /* Responsive Bento */
+  .bento-responsive {
+    @apply grid gap-4;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide on mobile */
+  @media (max-width: 767px) {
+    .hide-mobile {
+      display: none !important;
+    }
+  }
+
+  /* Hide on desktop */
+  @media (min-width: 768px) {
+    .hide-desktop {
+      display: none !important;
+    }
+  }
+}

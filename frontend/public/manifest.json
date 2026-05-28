@@ -1,0 +1,27 @@
+{
+  "name": "AMK AI Coder Platform",
+  "short_name": "AMK AI",
+  "description": "Next-generation AI coding assistant with deep thinking capabilities",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "New Chat",
+      "url": "/chat",
+      "description": "Start a new chat session"
+    }
+  ]
+}
