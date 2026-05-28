@@ -18,7 +18,7 @@ const routes = [
     path: '/chat',
     name: 'chat',
     component: () => import('@/views/Chat.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }  // Temporarily disabled for testing
   },
   {
     path: '/api-keys',
