@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
 
-// Use HuggingFace Space FastAPI backend (with /api prefix)
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://amkyawdev-amk-coder-backend.hf.space/api'
 
 export function useChat() {
@@ -36,14 +35,10 @@ export function useChat() {
     isLoading.value = true
     error.value = null
 
-    // Add user message
     addMessage('user', content)
-    // Create assistant placeholder
     addMessage('assistant', '')
 
     try {
-      console.log('Sending to:', API_BASE_URL + '/chat')
-      
       const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: {
@@ -57,22 +52,16 @@ export function useChat() {
         }),
       })
 
-      console.log('Response status:', response.status)
-
       if (!response.ok) {
         const data = await response.json().catch(() => ({}))
         throw new Error(data.detail || `HTTP ${response.status}: Request failed`)
       }
 
       const data = await response.json()
-      console.log('Response data:', data)
-      // Replace placeholder with actual response
       messages.value[messages.value.length - 1].content = data.response
 
     } catch (err) {
-      console.error('Fetch error:', err)
       error.value = err.message || 'Failed to send message'
-      // Remove empty message on error
       if (messages.value.length > 0 && !messages.value[messages.value.length - 1].content) {
         messages.value.pop()
       }
@@ -89,13 +78,6 @@ export function useChat() {
     messages.value = []
     error.value = null
     sessionId.value = 'default-' + Date.now()
-    
-    // Call backend to clear session
-    try {
-      await fetch(`${API_BASE_URL}/clear?session_id=${sessionId.value}`, {
-        method: 'POST'
-      })
-    } catch (e) {}
   }
 
   const toggleThinkingMode = () => {
